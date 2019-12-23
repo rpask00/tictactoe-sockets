@@ -3,7 +3,7 @@ import os
 
 
 class Grid():
-    def __init__(self, imageX, imageO):
+    def __init__(self):
         self.grid_lines = [
             [(0, 200), (600, 200)],
             [(0, 400), (600, 400)],
@@ -11,11 +11,12 @@ class Grid():
             [(400, 0), (400, 600)]
         ]
         self.grid = [['', '', ''] for x in range(3)]
-        self.imageX = imageX
-        self.imageO = imageO
+        self.imageX = pygame.image.load(os.path.join('assets', 'x.png'))
+        self.imageO = pygame.image.load(os.path.join('assets', 'o.png'))
         self.winner = False
 
-    def set_cell_value(self, x, y, value):
+    def set_cell_value(self, xy, value):
+        x, y = xy
         if self.get_cell_value(x, y) != '':
             return False
 
@@ -70,4 +71,4 @@ class Grid():
                     surface.blit(self.imageO, (x*200, y*200))
 
         if self.winner:
-            pygame.draw.line(surface, (8, 0, 18), self.winner[0], self.winner[1], 25)
+            pygame.draw.line(surface, (0, 0, 0), self.winner[0], self.winner[1], 25)

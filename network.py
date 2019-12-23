@@ -1,4 +1,5 @@
 import socket
+import pickle
 
 
 class Network():
@@ -11,12 +12,12 @@ class Network():
 
     def connect(self):
         self.client.connect(self.addr)
+        # self.client.send(str.encode('hello'))
         return self.client.recv(2048).decode()
 
     def exchange(self, data):
         try:
-            self.client.send(str.encode(data))
-            reply = self.client.recv(2048).decode()
-            return reply
+            self.client.send(pickle.dumps(data))
+            return pickle.loads(self.client.recv(2048))
         except socket.error as err:
             return str(err)
